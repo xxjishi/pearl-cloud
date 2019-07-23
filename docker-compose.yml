@@ -1,0 +1,18 @@
+version: "3.3"
+services:
+  eureka:
+    image: openjdk:8u222-jdk-stretch
+    volumes:
+      - /data/pearl/cloud:/data/pearl/cloud
+    ports:
+      - 8000:8000
+    command: ["java", "-jar", "/data/pearl/cloud/cloud-eureka.jar"]
+  zuul:
+    depends_on:
+      - eureka
+    image: openjdk:8u222-jdk-stretch
+    volumes:
+      - /data/pearl/cloud:/data/pearl/cloud
+    ports:
+      - 9000:9000
+    command: ["java", "-jar", "/data/pearl/cloud/cloud-zuul.jar"]
