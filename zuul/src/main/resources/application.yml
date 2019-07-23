@@ -1,0 +1,54 @@
+server:
+  port: 9000
+
+spring:    
+  application:
+    name: zuul
+
+logging:
+  level:
+    com.netflix: DEBUG
+
+eureka:  
+  client:
+    service-url:  
+      defaultZone: http://www.yokin.tech.local:8000/eureka
+  instance:
+    instance-id: zuul-instance
+    prefer-ip-address:  true
+info:
+  app:
+    name: "@project.name@"
+    description: "@project.description@"
+    version: "@project.version@"
+    spring-boot-version: "@project.parent.version@"
+
+endpoints:
+  web:
+    exposure:
+      include: "*"
+
+
+zuul:
+  ignored-services: "*"
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 10000
+  routes:
+    device:
+      serviceId: DEVICE
+      path: /gateway/device/**
+      sensitiveHeaders:
+    manage:
+      serviceId: MANAGE
+      path: /gateway/manage/**
+      sensitiveHeaders:
+    portal:
+      serviceId: PORTAL
+      path: /gateway/portal/**
+      sensitiveHeaders:
+
+
+ribbon: #ribbon负载均衡参数配置
+  ReadTimeout: 5000
+  ConnectTimeout: 5000
